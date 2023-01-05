@@ -1,7 +1,3 @@
-import React from 'react';
-
-const AutoCompleteSearch = () => {
-  return <div>AutoCompleteSearch</div>;
-};
+import { default as AutoCompleteSearch } from './AutoCompleteSearch';
 
 export default AutoCompleteSearch;
