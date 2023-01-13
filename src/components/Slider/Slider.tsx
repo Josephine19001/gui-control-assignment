@@ -5,13 +5,13 @@ import {
   updateOpacity,
   updateScaling,
 } from "../../services/slider-service";
-import DemoLayout from "./demo-layout";
 import {
   OPACITY_KEY,
   SCALING_KEY,
   SliderProps,
   UISettingOptions,
 } from "./util-types/types";
+import './slider-style.css';
 
 const Slider = ({ min, max, step, options }: SliderProps) => {
   const [values, setValues] = useState<number[]>([]);

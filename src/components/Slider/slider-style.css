@@ -1,0 +1,19 @@
+.container {}
+
+.slider-container {
+    width: 25rem;
+    position: relative;
+    margin:2rem 1rem;
+}
+.slider-container input{
+    width:100%;
+}
+.range-values {
+    list-style: none;
+    position: absolute;
+    display: flex;
+    top: 1rem;
+    width: 100%;
+    justify-content: space-between;
+    right: 0rem;
+}
