@@ -1,16 +1,11 @@
 import { useEffect, useState } from "react";
-import { updateScaling } from "../../services/slider-service";
+import { setScalingValue, updateScaling } from "../../services/slider-service";
 import DemoLayout from "./demo-layout";
 import { SCALING_KEY, SliderProps } from "./util-types/types";
 
 const Slider = ({ min, max, step, options }: SliderProps) => {
   const [values, setValues] = useState<number[]>([]);
-  const [defaultValue, setDefaultValue] = useState(1);
-
-  const onChange = (value: string) => {
-    setScalingValue(value);
-    updateScaling(parseFloat(value));
-  };
+  const [defaultValue, setDefaultValue] = useState(1);  
 
   const getRanges = (): number[] => {
     let ranges: number[] = [];
@@ -19,11 +14,7 @@ const Slider = ({ min, max, step, options }: SliderProps) => {
     }
     return ranges;
   };
-
-  const setScalingValue = (value: string) => {
-    localStorage.setItem(SCALING_KEY, value.toString());
-  };
-
+ 
   useEffect(() => {
     let scaling = localStorage.getItem(SCALING_KEY);
 
@@ -33,6 +24,11 @@ const Slider = ({ min, max, step, options }: SliderProps) => {
 
     setValues(getRanges());
   }, []);
+
+  const onChange = (value: string) => {
+    setScalingValue(value);
+    updateScaling(parseFloat(value));
+  };
 
   return (
     <div className="container">
