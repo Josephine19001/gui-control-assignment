@@ -1,5 +1,7 @@
-.container {}
-
+.slider-section {
+    padding: 2rem;
+    display: block;
+}
 .slider-container {
     width: 25rem;
     position: relative;
@@ -12,7 +14,7 @@
     list-style: none;
     position: absolute;
     display: flex;
-    top: 1rem;
+    top: 2rem;
     width: 100%;
     justify-content: space-between;
     right: 0rem;
