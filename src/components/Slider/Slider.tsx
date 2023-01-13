@@ -93,7 +93,6 @@ const Slider = ({ min, max, step, options }: SliderProps) => {
           ))}
         </datalist>
       </div>
-      <DemoLayout />
     </div>
   );
 };

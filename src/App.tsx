@@ -1,4 +1,5 @@
 import Slider from "./components/Slider";
+import DemoLayout from "./components/Slider/demo-layout";
 import { UISettingOptions } from "./components/Slider/util-types/types";
 import { getOpcacity, getScaling } from "./services/slider-service";
 
@@ -19,6 +20,8 @@ const App = () => {
       step={0.5}
       options={UISettingOptions.Opacity}
     />
+    
+    <DemoLayout />
     </div>
   );
 };
