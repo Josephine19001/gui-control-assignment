@@ -1,11 +1,22 @@
 import { useEffect, useState } from "react";
-import { setScalingValue, updateScaling } from "../../services/slider-service";
+import {
+  setOpacityValue,
+  setScalingValue,
+  updateOpacity,
+  updateScaling,
+} from "../../services/slider-service";
 import DemoLayout from "./demo-layout";
-import { SCALING_KEY, SliderProps } from "./util-types/types";
+import {
+  OPACITY_KEY,
+  SCALING_KEY,
+  SliderProps,
+  UISettingOptions,
+} from "./util-types/types";
 
 const Slider = ({ min, max, step, options }: SliderProps) => {
   const [values, setValues] = useState<number[]>([]);
-  const [defaultValue, setDefaultValue] = useState(1);  
+  const [defaultScalingValue, setDefaultScalingValue] = useState(1);
+  const [defaultOpacityValue, setDefaultOpacityValue] = useState(1);
 
   const getRanges = (): number[] => {
     let ranges: number[] = [];
@@ -14,34 +25,60 @@ const Slider = ({ min, max, step, options }: SliderProps) => {
     }
     return ranges;
   };
- 
+
   useEffect(() => {
     let scaling = localStorage.getItem(SCALING_KEY);
 
     if (scaling) {
-      setDefaultValue(parseFloat(scaling));
+      setDefaultScalingValue(parseFloat(scaling));
+    }
+
+    let opacity = localStorage.getItem(OPACITY_KEY);
+
+    if (opacity) {
+      setDefaultOpacityValue(parseFloat(opacity));
     }
 
     setValues(getRanges());
   }, []);
 
   const onChange = (value: string) => {
-    setScalingValue(value);
-    updateScaling(parseFloat(value));
+    switch (options) {
+      case UISettingOptions.Scaling:
+        setScalingValue(value);
+        updateScaling(parseFloat(value));
+        break;
+      case UISettingOptions.Opacity:
+        setOpacityValue(value);
+        updateOpacity(parseFloat(value));
+        break;
+      default:
+        break;
+    }
   };
 
   return (
     <div className="container">
       <div className="slider-container">
-        <div key={defaultValue}>
+        <div
+          key={
+            options === UISettingOptions.Scaling
+              ? defaultScalingValue
+              : defaultOpacityValue
+          }
+        >
           <input
             type="range"
-            name="scaling-slider"
+            name={"slider-" + options}
             min={min}
             max={max}
-            list="scaling-options"
+            list={"options-" + options}
             step={step}
-            defaultValue={defaultValue}
+            defaultValue={
+              options === UISettingOptions.Scaling
+                ? defaultScalingValue
+                : defaultOpacityValue
+            }
             onChange={(e) => onChange(e.target.value)}
           />
         </div>
@@ -50,7 +87,7 @@ const Slider = ({ min, max, step, options }: SliderProps) => {
             <li key={"value-" + i}>{val}</li>
           ))}
         </ul>
-        <datalist id="scaling-options">
+        <datalist id={"options-" + options}>
           {values.map((val, i) => (
             <option value={val} key={"option-" + i} />
           ))}
