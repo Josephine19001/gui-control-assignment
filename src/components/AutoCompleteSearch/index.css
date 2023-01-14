@@ -8,6 +8,8 @@
   --gray: #5d6c83;
   --green: #64ffda;
   --blue: #81d8f7;
+  --pale-blue: #1c4154d4;
+  --red: #ee4b2b;
 
   /*Font-sizes*/
   --font-size-sm: 0.875rem;
@@ -72,4 +74,23 @@ p {
   line-height: 1.6;
   letter-spacing: -0.02em;
   font-size: var(--font-size-md);
+}
+
+h1,
+h4 {
+  color: var(--toned-white);
+  line-height: 1.1;
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  font-size: 1.6rem;
+  font-weight: 600;
+}
+
+h4 {
+  font-size: var(--font-size-md);
+  font-weight: 600;
+  color: var(--green);
 }
