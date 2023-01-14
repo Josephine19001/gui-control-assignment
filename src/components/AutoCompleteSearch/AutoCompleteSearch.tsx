@@ -1,20 +1,137 @@
 import React, { useState, useEffect } from 'react';
-import { data } from '../AutoCompleteSearch/data';
+import styled from 'styled-components';
+import useOutsideClick from './hooks/useOutsideClick';
+import { CountryDataType } from './hooks/useCountries';
 
 interface AutocompleteSearchProps {
-  options?: string[];
   placeholder?: string;
   onSelect?: (option: string) => void;
+  data: CountryDataType[];
+  showSelectedItem?: boolean;
+  groupSearchItems?: boolean;
 }
 
+const Container = styled.div``;
+
+const SearchedItemsContainer = styled.div<{
+  isUserInput: boolean;
+}>`
+  width: var(--common-width);
+  max-height: 400px;
+  color: var(--toned-white);
+  background-color: var(--darker);
+  border: 1px solid var(--green);
+  border-top-right-radius: 0 !important;
+  border-top-left-radius: 0 !important;
+  border-top: 0;
+  border-radius: 5px;
+  padding: 16px 24px;
+  overflow: scroll;
+  overflow-x:hidden
+  position: relative;
+  display: ${({ isUserInput }) => (isUserInput ? 'block' : 'none')};
+`;
+
+const SearchList = styled.ul`
+  display: grid;
+  grid-template-columns: auto auto;
+  row-gap: 10px;
+  column-gap: 10px;
+`;
+
+const GroupedSearchList = styled(SearchList)`
+  row-gap: 20px;
+  h4 {
+    margin-bottom: 10px;
+  }
+`;
+
+const StyledListItem = styled.li<{ showSelectedItem: boolean }>`
+  ${({ showSelectedItem }) =>
+    showSelectedItem
+      ? '&:hover, &:focus, &:active {color: var(--green)}; cursor: pointer;'
+      : ''}
+`;
+
+const SelectedItemsList = styled.ul<{
+  hasAnythingBeenSelected: boolean;
+}>`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: ${({ hasAnythingBeenSelected }) =>
+    hasAnythingBeenSelected ? '30px' : ''};
+`;
+
+const SelectedItemWrapper = styled.div`
+  display: inline-flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  max-height: 30px;
+  border: 1px solid var(--blue);
+  padding: 8px 12px;
+`;
+
+const Cross = styled.button`
+  width: 20px;
+  height: 20px;
+  text-decoration: none;
+  background: transparent;
+  box-shadow: none;
+  border: none;
+  border: 1px solid var(--blue);
+  border-radius: 50%;
+  position: relative;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    width: 80%;
+    height: 1.5px;
+    background-color: var(--blue);
+    transition: 0.3s ease-out;
+    left: 50%;
+    top: 50%;
+  }
+  &:after {
+    transform: translate(-50%, -50%) rotate(45deg);
+  }
+  &:before {
+    transform: translate(-50%, -50%) rotate(-45deg);
+  }
+  &:hover,
+  &:focus {
+    background-color: var(--pale-blue);
+  }
+`;
+
+const SearchNotFoundText = styled.p`
+  color: var(--red);
+`;
+
 const AutoCompleteSearch = ({
-  options,
   placeholder,
   onSelect,
+  data,
+  showSelectedItem,
+  groupSearchItems,
 }: AutocompleteSearchProps) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
   const [filteredData, setFilteredData] = useState<string[]>([]);
+  const [groupedFilteredData, setGroupedFilteredData] = useState<{
+    [key: string]: any;
+  }>({});
+  const [isUserInput, setIsUserInput] = useState(false);
+
+  const closeSearchableItems = () => setIsUserInput(false);
+
+  const closeSearchableItemsRef = useOutsideClick(
+    closeSearchableItems
+  );
 
   const handleSearchQueryChange = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -30,12 +147,24 @@ const AutoCompleteSearch = ({
   };
 
   useEffect(() => {
-    const filteredItems = data.filter((d) =>
-      d.toLowerCase().includes(searchQuery.toLowerCase())
-    );
+    const filteredItems = data
+      .map((obj) => obj.name)
+      .filter((item) =>
+        item.toLowerCase().includes(searchQuery.toLowerCase())
+      );
 
+    const groupByCategory = data.reduce((group: any, object) => {
+      const categoryName = object.categoryName as string;
+      group[categoryName] = group[categoryName] ?? [];
+      group[categoryName].push(object.name);
+      return group;
+    }, {});
+
+    if (groupSearchItems) {
+      setGroupedFilteredData(groupByCategory);
+    }
     setFilteredData(filteredItems);
-  }, [searchQuery]);
+  }, [data, groupSearchItems, searchQuery]);
 
   const handleRemoveSelectedItem = (item: string) => {
     const updatedItems = selectedItems.filter(
@@ -46,37 +175,113 @@ const AutoCompleteSearch = ({
     setSelectedItems(updatedItems);
   };
 
+  const noSearchFoundElement = (
+    <SearchNotFoundText>Search query not found</SearchNotFoundText>
+  );
+
   return (
-    <div>
-      <h1>Auto complete</h1>
-      <ul>
-        {selectedItems.map((d) => {
-          return (
-            <li key={d}>
-              {d}{' '}
-              <span onClick={() => handleRemoveSelectedItem(d)}>
-                X
-              </span>
-            </li>
-          );
-        })}
-      </ul>
+    <Container
+      ref={closeSearchableItemsRef as React.RefObject<HTMLDivElement>}
+    >
+      {/* <SearchDropdownArrowContainer> */}
       <input
         type="text"
+        autoComplete="new-password"
         placeholder={placeholder}
         value={searchQuery}
+        onClick={() => setIsUserInput(true)}
         onChange={handleSearchQueryChange}
       />
-      <ul>
-        {filteredData.map((d) => {
-          return (
-            <li key={d} onClick={() => handleSelectItem(d)}>
-              {d}
-            </li>
-          );
-        })}
-      </ul>
-    </div>
+      <SearchedItemsContainer isUserInput={isUserInput}>
+        {showSelectedItem && (
+          <SelectedItemsList
+            hasAnythingBeenSelected={selectedItems.length > 0}
+          >
+            {selectedItems.map((item) => {
+              return (
+                <SelectedItemWrapper>
+                  <li key={item}>{item}</li>
+                  <Cross
+                    onClick={() => handleRemoveSelectedItem(item)}
+                  />
+                </SelectedItemWrapper>
+              );
+            })}
+          </SelectedItemsList>
+        )}
+        {groupSearchItems ? (
+          <GroupedSearchList>
+            {Object.entries(groupedFilteredData).map(
+              (groupedItem) => {
+                const searchableItems = groupedItem[1]
+                  .slice(0, 5)
+                  .filter((filteredItem: string) =>
+                    filteredItem
+                      .toLowerCase()
+                      .includes(searchQuery.toLowerCase())
+                  );
+
+                if (searchableItems.length === 0) {
+                  return noSearchFoundElement;
+                }
+                return (
+                  <div key={groupedItem[1]}>
+                    <h4>{groupedItem[0]}</h4>
+                    {searchableItems
+                      .filter(
+                        (filteredItem: string) =>
+                          !selectedItems.includes(filteredItem)
+                      )
+                      .map((filteredItem: string) => {
+                        return (
+                          <StyledListItem
+                            showSelectedItem={
+                              showSelectedItem ? true : false
+                            }
+                            key={filteredItem}
+                            onClick={() =>
+                              showSelectedItem &&
+                              handleSelectItem(filteredItem)
+                            }
+                          >
+                            {filteredItem}
+                          </StyledListItem>
+                        );
+                      })}
+                  </div>
+                );
+              }
+            )}
+          </GroupedSearchList>
+        ) : (
+          <SearchList>
+            {filteredData.length === 0
+              ? noSearchFoundElement
+              : filteredData
+                  .filter(
+                    (filteredItem) =>
+                      !selectedItems.includes(filteredItem)
+                  )
+                  .map((filteredItem) => {
+                    return (
+                      <StyledListItem
+                        showSelectedItem={
+                          showSelectedItem ? true : false
+                        }
+                        key={filteredItem}
+                        onClick={() =>
+                          showSelectedItem &&
+                          handleSelectItem(filteredItem)
+                        }
+                      >
+                        {filteredItem}
+                      </StyledListItem>
+                    );
+                  })}
+          </SearchList>
+        )}
+      </SearchedItemsContainer>
+    </Container>
   );
 };
 
