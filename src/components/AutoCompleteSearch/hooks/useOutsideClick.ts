@@ -1,6 +1,5 @@
 import { useEffect, useRef } from 'react';
 
-//https://usehooks-ts.com/react-hook/use-on-click-outside
 function useOutsideClick(callback: () => void) {
   const ref = useRef<HTMLElement>(null);
   useEffect(() => {
