@@ -1,5 +1,7 @@
 # GUI controls 
-The GUI controls are implemented using React and TypeScript
+The project implements two GUI controls: auto-complete search tool and slider for UI adjustment. The Auto-complete search tool is a handy tool that supports easier searching for users and is one of the popular GUI controls these days. The Slider GUI control lets users adjuest the opacity and scale of the application in different sizes. The components are reusable and documented for further development.  
+
+The GUI controls are implemented using React and TypeScript. React is one of the most popular Front-end framework for robust web application. Initially, React applications have been implemented with JavaScript. This project takes TypeScript into use for better maintainability and reusability of the codebase. 
 ## Contributors:
 Anh Vo (Student number: 2203300)
 
@@ -30,3 +32,15 @@ export enum UISettingOptions{
 }`
 
 ### Auto Complete Search GUI control (Josephine Gyamera)
+
+## Running the application locally:
+Requirements:
+- Visual Studio Code
+- Npm 
+- Node.js
+
+To test the application locally, after cloning the repos, in VS Code terminal, run:
+
+`npm install`
+
+`npm start`
