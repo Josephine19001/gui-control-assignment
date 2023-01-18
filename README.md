@@ -15,7 +15,7 @@ Josephine Gyamera (Student number: 2205251)
     expiresIn={3600}
 />`
 
-The value of `expiresIn` is nullable. For definition of props in Slider component, check `SliderProps` from ./Slider/util-types/types.ts
+The value of `expiresIn` is nullable and value is in seconds format. For definition of props in Slider component, check `SliderProps` from ./Slider/util-types/types.ts
 
 `export interface SliderProps {
     min:number;

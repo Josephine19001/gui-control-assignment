@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { CopyBlock, dracula } from 'react-code-blocks';
-import './index.css';
+import '../../styles/index.css';
 import useCountries from './hooks/useCountries';
 import AutoCompleteSearch from './AutoCompleteSearch';
 
