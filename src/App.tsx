@@ -1,7 +1,12 @@
-import SliderUIControl from "./components/Slider";
+import React from 'react';
+import AutoCompleteSearch from './components/AutoCompleteSearch';
 
-const App = () => {
-  return <SliderUIControl/>
-};
+function App() {
+  return (
+    <div>
+      <AutoCompleteSearch />
+    </div>
+  );
+}
 
 export default App;
