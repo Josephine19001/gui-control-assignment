@@ -31,7 +31,7 @@ export enum UISettingOptions{
     Opacity
 }`
 
-### Auto Complete Search GUI control (Josephine Gyamera)
+## Auto Complete Search GUI control (Josephine Gyamera)
 
 ## Running the application locally:
 Requirements:
