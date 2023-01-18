@@ -1,9 +1,7 @@
 import { useEffect, useState } from "react";
 import {
-  setOpacityValue,
-  setScalingValue,
-  updateOpacity,
-  updateScaling,
+  setUISettingsValue,
+  updateUISettingValue,
 } from "../../services/slider-service";
 import {
   OPACITY_KEY,
@@ -13,7 +11,7 @@ import {
 } from "./util-types/types";
 import './slider-style.css';
 
-const Slider = ({ min, max, step, options }: SliderProps) => {
+const Slider = ({ min, max, step, options, expiresIn }: SliderProps) => {
   const [values, setValues] = useState<number[]>([]);
   const [defaultScalingValue, setDefaultScalingValue] = useState(1);
   const [defaultOpacityValue, setDefaultOpacityValue] = useState(1);
@@ -43,18 +41,20 @@ const Slider = ({ min, max, step, options }: SliderProps) => {
   }, []);
 
   const onChange = (value: string) => {
+    let key = '';
     switch (options) {
       case UISettingOptions.Scaling:
-        setScalingValue(value);
-        updateScaling(parseFloat(value));
+        key = SCALING_KEY
         break;
       case UISettingOptions.Opacity:
-        setOpacityValue(value);
-        updateOpacity(parseFloat(value));
+        key = OPACITY_KEY;
         break;
       default:
         break;
     }
+    
+    setUISettingsValue(key, value, expiresIn);
+    updateUISettingValue(key, value);
   };
 
   return (

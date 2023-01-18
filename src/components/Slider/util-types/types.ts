@@ -8,7 +8,8 @@ export interface SliderProps {
     min:number;
     max: number;
     step: number;
-    options: UISettingOptions
+    options: UISettingOptions;
+    expiresIn?: number;
 }
 
 export enum UISettingOptions{

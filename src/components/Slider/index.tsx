@@ -1,13 +1,14 @@
-import { getOpcacity, getScaling } from "../../services/slider-service";
+import { getUISettingsValue } from "../../services/slider-service";
 import DemoLayout from "./demo-layout/demo-layout";
 import Slider from "./Slider";
 import { UISettingOptions } from "./util-types/types";
 
-const SliderUIControl = () => {
-  getScaling();
-  getOpcacity();
+const SliderGUIControl = () => {
+  getUISettingsValue();
+
   return (
-    <div className="slider">
+    <div className="slider-gui">
+      <div className="slider">
       <div className="slider-section">
         <strong>UI Scaling setting slider</strong>
         <Slider
@@ -15,6 +16,7 @@ const SliderUIControl = () => {
           max={1.25}
           step={0.25}
           options={UISettingOptions.Scaling}
+          expiresIn={3600}
         />
       </div>
       <div className="slider-section">
@@ -24,10 +26,12 @@ const SliderUIControl = () => {
           max={1}
           step={0.125}
           options={UISettingOptions.Opacity}
+          expiresIn={3600}
         />
       </div>
-      <DemoLayout />
+    </div>    
+    <DemoLayout />
     </div>
   );
 };
-export default SliderUIControl;
+export default SliderGUIControl;

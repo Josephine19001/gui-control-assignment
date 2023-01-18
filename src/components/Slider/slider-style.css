@@ -1,21 +1,22 @@
+.slider-gui{
+    display: grid;
+    grid-template-columns: 30% 1fr;
+    grid-gap: 10rem;
+}
 .slider-section {
     padding: 2rem;
     display: block;
 }
 .slider-container {
-    width: 25rem;
+    width: var(--common-width);
     position: relative;
     margin:2rem 1rem;
-}
-.slider-container input{
-    width:100%;
 }
 .range-values {
     list-style: none;
     position: absolute;
     display: flex;
-    top: 2rem;
-    width: 100%;
+    width: var(--common-width);
     justify-content: space-between;
-    right: 0rem;
+    left: 2rem;
 }
