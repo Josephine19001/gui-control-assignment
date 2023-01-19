@@ -73,7 +73,7 @@ const Slider = ({ min, max, step, options, expiresIn }: SliderProps) => {
             min={min}
             max={max}
             list={"options-" + options}
-            step={step}
+            step={step / 10}            
             defaultValue={
               options === UISettingOptions.Scaling
                 ? defaultScalingValue
@@ -82,14 +82,9 @@ const Slider = ({ min, max, step, options, expiresIn }: SliderProps) => {
             onChange={(e) => onChange(e.target.value)}
           />
         </div>
-        <ul className="range-values">
+        <datalist className="range-values" id={"options-" + options}>
           {values.map((val, i) => (
-            <li key={"value-" + i}>{val}</li>
-          ))}
-        </ul>
-        <datalist id={"options-" + options}>
-          {values.map((val, i) => (
-            <option value={val} key={"option-" + i} />
+            <option value={val} key={"option-" + i} label={val.toString()}/>
           ))}
         </datalist>
       </div>
