@@ -1,16 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import useOutsideClick from './hooks/useOutsideClick';
-import { CountryDataType } from './hooks/useCountries';
+
+export interface OptionType {
+  id: string;
+  categoryName?: string;
+  name: string;
+}
 
 interface AutocompleteSearchProps {
   placeholder?: string;
   onSelect?: (option: string) => void;
-  data: CountryDataType[];
+  options: OptionType[];
   showSelectedItem?: boolean;
   groupSearchItems?: boolean;
 }
-
 
 const SearchedItemsContainer = styled.div<{
   isUserInput: boolean;
@@ -114,7 +118,7 @@ const SearchNotFoundText = styled.p`
 const AutoCompleteSearch = ({
   placeholder,
   onSelect,
-  data,
+  options,
   showSelectedItem,
   groupSearchItems,
 }: AutocompleteSearchProps) => {
@@ -143,16 +147,18 @@ const AutoCompleteSearch = ({
       ...oldSelectedItems,
       item,
     ]);
+
+    onSelect?.(item);
   };
 
   useEffect(() => {
-    const filteredItems = data
+    const filteredItems = options
       .map((obj) => obj.name)
       .filter((item) =>
         item.toLowerCase().includes(searchQuery.toLowerCase())
       );
 
-    const groupByCategory = data.reduce((group: any, object) => {
+    const groupByCategory = options.reduce((group: any, object) => {
       const categoryName = object.categoryName as string;
       group[categoryName] = group[categoryName] ?? [];
       group[categoryName].push(object.name);
@@ -163,7 +169,7 @@ const AutoCompleteSearch = ({
       setGroupedFilteredData(groupByCategory);
     }
     setFilteredData(filteredItems);
-  }, [data, groupSearchItems, searchQuery]);
+  }, [options, groupSearchItems, searchQuery]);
 
   const handleRemoveSelectedItem = (item: string) => {
     const updatedItems = selectedItems.filter(
@@ -179,7 +185,9 @@ const AutoCompleteSearch = ({
   );
 
   return (
-    <div ref={closeSearchableItemsRef as React.RefObject<HTMLDivElement>}>
+    <div
+      ref={closeSearchableItemsRef as React.RefObject<HTMLDivElement>}
+    >
       <input
         type="text"
         autoComplete="new-password"

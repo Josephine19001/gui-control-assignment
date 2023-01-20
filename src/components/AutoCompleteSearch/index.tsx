@@ -36,7 +36,7 @@ const AutoCompleteSearchContent = () => {
               <h1>{title}</h1>
               <AutoCompleteSearch
                 placeholder={'Type any country name'}
-                data={countries}
+                options={countries}
                 showSelectedItem={showSelectedItem}
                 groupSearchItems={groupSearchItems}
               />

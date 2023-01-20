@@ -1,21 +1,16 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-
-export interface CountryDataType {
-  id: string;
-  categoryName?: string;
-  name: string;
-}
+import { OptionType } from '../AutoCompleteSearch';
 
 const useCountries = () => {
-  const [countries, setCountries] = useState<CountryDataType[]>([]);
+  const [countries, setCountries] = useState<OptionType[]>([]);
 
   const fetchCountriesData = async () => {
     try {
       const countries = await axios.get(
         'https://restcountries.com/v3.1/all'
       );
-      const countriesData: CountryDataType[] = countries.data.map(
+      const countriesData: OptionType[] = countries.data.map(
         (country: { [key: string]: any }) => ({
           id: country.name.common,
           name: country.name.common,
