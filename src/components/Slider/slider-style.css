@@ -1,0 +1,24 @@
+.slider-gui {
+    display: grid;
+    grid-template-columns: 30% 1fr;
+    grid-gap: 10rem;
+}
+
+.slider-section {
+    padding: 2rem;
+    display: block;
+}
+
+.slider-container {
+    width: var(--common-width);
+    margin: 2rem 1rem;
+}
+.slider-container input[type="range"]{
+    padding: 0rem;
+}
+.range-values {
+    display: flex;
+    width: var(--common-width);
+    justify-content: space-between;
+    flex-direction: row;
+}
