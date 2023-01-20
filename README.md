@@ -1,46 +1,46 @@
-# Getting Started with Create React App
+# GUI controls 
+The project implements two GUI controls: auto-complete search tool and slider for UI adjustment. The Auto-complete search tool is a handy tool that supports easier searching for users and is one of the popular GUI controls these days. The Slider GUI control lets users adjuest the opacity and scale of the application in different sizes. The components are reusable and documented for further development.  
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+The GUI controls are implemented using React and TypeScript. React is one of the most popular Front-end framework for robust web application. Initially, React applications have been implemented with JavaScript. This project takes TypeScript into use for better maintainability and reusability of the codebase. 
+## Contributors:
+Anh Vo (Student number: 2203300)
 
-## Available Scripts
+Josephine Gyamera (Student number: 2205251)
 
-In the project directory, you can run:
+## Slider GUI control for adjusting UI (opacity, scaling) (Anh Vo)
+### Instructions:
+`<Slider
+    min={0.25}
+    max={1.25}
+    step={0.25}
+    options={UISettingOptions.Scaling}
+    expiresIn={3600}
+/>`
 
-### `npm start`
+The value of `expiresIn` is nullable and value is in seconds format. For definition of props in Slider component, check `SliderProps` from ./Slider/util-types/types.ts
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+`export interface SliderProps {
+    min:number;
+    max: number;
+    step: number;
+    options: UISettingOptions;
+    expiresIn?: number;
+}
+export enum UISettingOptions{
+    Scaling,
+    Opacity
+}`
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Auto Complete Search GUI control (Josephine Gyamera)
 
-### `npm test`
+## Running the application locally:
+Requirements:
+- Visual Studio Code
+- Npm 
+- Node.js
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+To test the application locally, after cloning the repos, in VS Code terminal, run:
 
-### `npm run build`
+`npm install`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+`npm start`

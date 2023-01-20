@@ -1,0 +1,104 @@
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@100;200;300;500;600;700&family=Bellefair&family=Roboto:wght@100;300;400;500;700&family=Source+Code+Pro:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+:root {
+  /* Color */
+  --darkest: #1d1d1d;
+  --darker: #232323;
+  --toned-white: #f2f2f2;
+  --gray: #5d6c83;
+  --green: #64ffda;
+  --blue: #81d8f7;
+  --pale-blue: #1c4154d4;
+  --red: #ee4b2b;
+
+  /*Font-sizes*/
+  --font-size-sm: 0.875rem;
+  --font-size-md: 1rem;
+
+  /* Common width */
+  --common-width: 400px;
+}
+
+body {
+  font-family: 'Source Code Pro', sans-serif;
+  background-color: var(--darkest);
+  color: var(--toned-white);
+  box-sizing: border-box;
+}
+
+input {
+  height: 38px;
+  width: var(--common-width);
+  padding: 16px 24px;
+  color: var(--toned-white);
+  background-color: var(--darker);
+  font-size: var(--font-size-md);
+  line-height: 1.125em;
+  letter-spacing: -0.02em;
+  border: 1px solid var(--green);
+  border-radius: 5px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+  transition: color 0.2s ease;
+}
+
+input:focus {
+  outline: none;
+  border-color: var(--green);
+  transition: border-color 0.2s ease;
+}
+
+label {
+  display: block;
+  margin-bottom: 26px;
+  color: var(--toned-white);
+  font-size: var(--font-size-md);
+  line-height: 1.143em;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+li {
+  color: var(--toned-white);
+  line-height: 1.6;
+  letter-spacing: -0.02em;
+  font-size: var(--font-size-md);
+}
+
+p {
+  color: var(--toned-white);
+  line-height: 1.6;
+  letter-spacing: -0.02em;
+  font-size: var(--font-size-md);
+}
+
+h1,
+h4 {
+  color: var(--toned-white);
+  line-height: 1.1;
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+h2 {
+  font-size: 1.8rem;
+  font-weight: 600;
+}
+h3 {
+  font-size: 1.6rem;
+  font-weight: 600;
+}
+h4 {
+  font-size: var(--font-size-md);
+  font-weight: 600;
+  color: var(--green);
+}
