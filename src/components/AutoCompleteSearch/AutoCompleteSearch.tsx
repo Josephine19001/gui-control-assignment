@@ -11,7 +11,6 @@ interface AutocompleteSearchProps {
   groupSearchItems?: boolean;
 }
 
-const Container = styled.div``;
 
 const SearchedItemsContainer = styled.div<{
   isUserInput: boolean;
@@ -180,10 +179,7 @@ const AutoCompleteSearch = ({
   );
 
   return (
-    <Container
-      ref={closeSearchableItemsRef as React.RefObject<HTMLDivElement>}
-    >
-      {/* <SearchDropdownArrowContainer> */}
+    <div ref={closeSearchableItemsRef as React.RefObject<HTMLDivElement>}>
       <input
         type="text"
         autoComplete="new-password"
@@ -281,7 +277,7 @@ const AutoCompleteSearch = ({
           </SearchList>
         )}
       </SearchedItemsContainer>
-    </Container>
+    </div>
   );
 };
 
