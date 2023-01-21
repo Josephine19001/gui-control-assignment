@@ -6,6 +6,8 @@ The GUI controls are implemented using React and TypeScript. React is one of the
 
 [Software Specification Requirement.](https://drive.google.com/file/d/1JJS5XirllLHQWOSwLOvSIVRNWyejZc3H/view?usp=share_link)
 
+[Quick demo](https://gui-control-assignment-anh-josephine.vercel.app/)
+
 ## Contributors:
 
 Anh Vo (Student number: 2203300)
