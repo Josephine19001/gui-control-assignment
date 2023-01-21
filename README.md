@@ -4,6 +4,8 @@ The project implements two GUI controls: auto-complete search tool and slider fo
 
 The GUI controls are implemented using React and TypeScript. React is one of the most popular Front-end framework for robust web application. Initially, React applications have been implemented with JavaScript. This project takes TypeScript into use for better maintainability, reusability and types support of the codebase.
 
+[Software Specification Requirement.](https://drive.google.com/file/d/1JJS5XirllLHQWOSwLOvSIVRNWyejZc3H/view?usp=share_link)
+
 ## Contributors:
 
 Anh Vo (Student number: 2203300)
