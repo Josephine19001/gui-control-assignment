@@ -4,9 +4,12 @@ import { OptionType } from '../AutoCompleteSearch';
 
 const useCountries = () => {
   const [countries, setCountries] = useState<OptionType[]>([]);
+  const [isError, setIsError] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const fetchCountriesData = async () => {
     try {
+      setIsLoading(true);
       const countries = await axios.get(
         'https://restcountries.com/v3.1/all'
       );
@@ -17,17 +20,20 @@ const useCountries = () => {
           categoryName: country.continents[0],
         })
       );
+      setIsLoading(false);
       setCountries(countriesData);
-    } catch (err) {
-      console.log(err);
+    } catch (err: any) {
+      setIsError(!!err.message);
     }
   };
+
+  console.log('--test', isError);
 
   useEffect(() => {
     fetchCountriesData();
   }, []);
 
-  return { countries };
+  return { countries, isError, isLoading };
 };
 
 export default useCountries;

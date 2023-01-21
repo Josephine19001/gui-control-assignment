@@ -60,6 +60,7 @@ import AutoCompleteSearch from './AutoCompleteSearch';
 
 2. Use the component in your JSX, passing in the following props:
    - `options`: an array of an object representing the options for the search. The following is the structure of an item in the options
+
 ```
 {
  id: string,
@@ -67,12 +68,19 @@ import AutoCompleteSearch from './AutoCompleteSearch';
  name: string
 }
 ```
-   - `placeholder`: an optional string for the placeholder text in the search input
-   - `showSelectedItem`: an optional boolean that will allow option items to be selectable
-   - `groupSearchItems`: an optional boolean that allows the options to be grouped into categories. With this,
-   - `onSelect`: a callback function to handle when a user selects an option.
+
+- `placeholder`: an optional string for the placeholder text in the search input
+- `showSelectedItem`: an optional boolean that will allow option items to be selectable
+- `groupSearchItems`: an optional boolean that allows the options to be grouped into categories. With this,
+- `onSelect`: a callback function to handle when a user selects an option.
+- `isError`: an optional boolean to handle error state.
+- `isLoading`: an optional boolean to handle loading state.
+- `errorMessage`: an optional boolean to handle error message.
+
 ### Example
+
 The following is example of how the component can be used
+
 ```
 const handleSelect = (selectedOptionItem) => {
 console.log(Selected item: ${selectedOptionItem});
@@ -84,6 +92,8 @@ console.log(Selected item: ${selectedOptionItem});
  groupSearchItems={true}
  placeholder='Search for an item'
  onSelect={handleSelect}
+ isError={false}
+ isLoading={false}
 />
 ```
 

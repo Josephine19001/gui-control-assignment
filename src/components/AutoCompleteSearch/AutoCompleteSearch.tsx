@@ -14,6 +14,9 @@ interface AutocompleteSearchProps {
   options: OptionType[];
   showSelectedItem?: boolean;
   groupSearchItems?: boolean;
+  isError?: boolean;
+  isLoading?: boolean;
+  errorMessage?: string;
 }
 
 const SearchedItemsContainer = styled.div<{
@@ -111,8 +114,11 @@ const Cross = styled.button`
   }
 `;
 
-const SearchNotFoundText = styled.p`
+const ErrorText = styled.p`
   color: var(--red);
+`;
+const LoadingText = styled.p`
+  color: var(--blue);
 `;
 
 const AutoCompleteSearch = ({
@@ -121,6 +127,9 @@ const AutoCompleteSearch = ({
   options,
   showSelectedItem,
   groupSearchItems,
+  isLoading,
+  isError,
+  errorMessage,
 }: AutocompleteSearchProps) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
@@ -181,8 +190,106 @@ const AutoCompleteSearch = ({
   };
 
   const noSearchFoundElement = (
-    <SearchNotFoundText>Search query not found</SearchNotFoundText>
+    <ErrorText>Search query not found</ErrorText>
   );
+
+  const renderGroupedItems = () => {
+    if (isError) {
+      return (
+        <ErrorText>
+          {errorMessage ||
+            'An error occurred while fetching the data'}
+        </ErrorText>
+      );
+    }
+
+    if (isLoading) {
+      return <LoadingText>Loading...</LoadingText>;
+    }
+    return (
+      <GroupedSearchList>
+        {Object.entries(groupedFilteredData).map((groupedItem) => {
+          const searchableItems = groupedItem[1]
+            .slice(0, 5)
+            .filter((filteredItem: string) =>
+              filteredItem
+                .toLowerCase()
+                .includes(searchQuery.toLowerCase())
+            );
+
+          if (searchableItems.length === 0) {
+            return noSearchFoundElement;
+          }
+          return (
+            <div key={groupedItem[1]}>
+              <h4>{groupedItem[0]}</h4>
+              {searchableItems
+                .filter(
+                  (filteredItem: string) =>
+                    !selectedItems.includes(filteredItem)
+                )
+                .map((filteredItem: string) => {
+                  return (
+                    <StyledListItem
+                      showSelectedItem={
+                        showSelectedItem ? true : false
+                      }
+                      key={filteredItem}
+                      onClick={() =>
+                        showSelectedItem &&
+                        handleSelectItem(filteredItem)
+                      }
+                    >
+                      {filteredItem}
+                    </StyledListItem>
+                  );
+                })}
+            </div>
+          );
+        })}
+      </GroupedSearchList>
+    );
+  };
+
+  const renderItems = () => {
+    if (isError) {
+      return (
+        <ErrorText>
+          {errorMessage ||
+            'An error occurred while fetching the data'}
+        </ErrorText>
+      );
+    }
+
+    if (isLoading) {
+      return <LoadingText>Loading...</LoadingText>;
+    }
+    return (
+      <SearchList>
+        {filteredData.length === 0
+          ? noSearchFoundElement
+          : filteredData
+              .filter(
+                (filteredItem) =>
+                  !selectedItems.includes(filteredItem)
+              )
+              .map((filteredItem) => {
+                return (
+                  <StyledListItem
+                    showSelectedItem={showSelectedItem ? true : false}
+                    key={filteredItem}
+                    onClick={() =>
+                      showSelectedItem &&
+                      handleSelectItem(filteredItem)
+                    }
+                  >
+                    {filteredItem}
+                  </StyledListItem>
+                );
+              })}
+      </SearchList>
+    );
+  };
 
   return (
     <div
@@ -213,77 +320,8 @@ const AutoCompleteSearch = ({
             })}
           </SelectedItemsList>
         )}
-        {groupSearchItems ? (
-          <GroupedSearchList>
-            {Object.entries(groupedFilteredData).map(
-              (groupedItem) => {
-                const searchableItems = groupedItem[1]
-                  .slice(0, 5)
-                  .filter((filteredItem: string) =>
-                    filteredItem
-                      .toLowerCase()
-                      .includes(searchQuery.toLowerCase())
-                  );
 
-                if (searchableItems.length === 0) {
-                  return noSearchFoundElement;
-                }
-                return (
-                  <div key={groupedItem[1]}>
-                    <h4>{groupedItem[0]}</h4>
-                    {searchableItems
-                      .filter(
-                        (filteredItem: string) =>
-                          !selectedItems.includes(filteredItem)
-                      )
-                      .map((filteredItem: string) => {
-                        return (
-                          <StyledListItem
-                            showSelectedItem={
-                              showSelectedItem ? true : false
-                            }
-                            key={filteredItem}
-                            onClick={() =>
-                              showSelectedItem &&
-                              handleSelectItem(filteredItem)
-                            }
-                          >
-                            {filteredItem}
-                          </StyledListItem>
-                        );
-                      })}
-                  </div>
-                );
-              }
-            )}
-          </GroupedSearchList>
-        ) : (
-          <SearchList>
-            {filteredData.length === 0
-              ? noSearchFoundElement
-              : filteredData
-                  .filter(
-                    (filteredItem) =>
-                      !selectedItems.includes(filteredItem)
-                  )
-                  .map((filteredItem) => {
-                    return (
-                      <StyledListItem
-                        showSelectedItem={
-                          showSelectedItem ? true : false
-                        }
-                        key={filteredItem}
-                        onClick={() =>
-                          showSelectedItem &&
-                          handleSelectItem(filteredItem)
-                        }
-                      >
-                        {filteredItem}
-                      </StyledListItem>
-                    );
-                  })}
-          </SearchList>
-        )}
+        {groupSearchItems ? renderGroupedItems() : renderItems()}
       </SearchedItemsContainer>
     </div>
   );

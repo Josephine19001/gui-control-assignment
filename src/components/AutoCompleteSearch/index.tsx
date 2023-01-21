@@ -9,8 +9,9 @@ import AutoCompleteSearch from './AutoCompleteSearch';
 const Container = styled.div`
   display: flex;
   align-items: flex-start;
-  justify-content: space-between;
+  gap: 16px;
   padding: 32px;
+  flex-wrap: wrap;
 `;
 
 const SearchContainer = styled.div`
@@ -33,12 +34,13 @@ const AutoCompleteSearchContent = () => {
         }) => {
           return (
             <SearchContainer key={id}>
-              <h1>{title}</h1>
+              <h2>{title}</h2>
               <AutoCompleteSearch
                 placeholder={'Type any country name'}
                 options={countries}
                 showSelectedItem={showSelectedItem}
                 groupSearchItems={groupSearchItems}
+                isError={false}
               />
               <CopyBlock
                 language={'tsx'}
@@ -52,6 +54,34 @@ const AutoCompleteSearchContent = () => {
           );
         }
       )}
+      <SearchContainer>
+        <h2>Error state</h2>
+        <AutoCompleteSearch options={countries} isError={true} />
+        <CopyBlock
+          language={'tsx'}
+          text={`//Example of usage
+
+<AutoCompleteSearch options={countries} isError={true} />`}
+          showLineNumbers={false}
+          theme={dracula}
+          wrapLines={true}
+          codeBlock
+        />
+      </SearchContainer>
+      <SearchContainer>
+        <h2>Loading state</h2>
+        <AutoCompleteSearch options={countries} isLoading={true} />
+        <CopyBlock
+          language={'tsx'}
+          text={`//Example of usage
+
+<AutoCompleteSearch options={countries} isLoading={true} />`}
+          showLineNumbers={false}
+          theme={dracula}
+          wrapLines={true}
+          codeBlock
+        />
+      </SearchContainer>
     </Container>
   );
 };
