@@ -10,9 +10,9 @@ The GUI controls are implemented using React and TypeScript. React is one of the
 
 ## Contributors:
 
-Anh Vo (Student number: 2203300)
+Anh Vo 
 
-Josephine Gyamera (Student number: 2205251)
+Josephine Gyamera 
 
 ## Slider GUI control for adjusting UI (opacity, scaling) (Anh Vo)
 
